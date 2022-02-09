@@ -1,0 +1,12 @@
+#defaultView:Graph
+
+SELECT
+  ?lab1 ?lab1Label ?lab2 ?lab2Label ?edgeLabel
+WHERE {
+  ?lab1 wdt:P361* wd:Q107380113 .  # Get all subunits of HMS
+  ?lab1 wdt:P361 ?lab2 .  # Get all parents of those subunits
+  FILTER (?lab1 != ?lab2) .
+  FILTER (?lab1 != wd:Q107380113) .
+  BIND("part of" as ?edgeLabel)
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,da,de,es,fr,jp,sv,ru,zh". }
+}
