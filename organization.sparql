@@ -49,6 +49,33 @@ WHERE {
       BIND("FF00FF" AS ?rgb) .
       BIND("part of" AS ?edgeLabel) .
     }
-  }  
+  }
+  UNION 
+  {
+    SELECT
+      (?author1 as ?subject) (?author1Label as ?subjectLabel) ?image1
+      ?rgb ?edgeLabel
+      (?author2 as ?object) (?author2Label as ?objectLabel) ?image2
+    WHERE {
+      wd:Q107380113 ^wdt:P361* / ^( wdt:P108 | wdt:P1416 | wdt:P463 ) ?author1 , ?author2 . 
+      ?work wdt:P50 ?author1 , ?author2 .
+
+      # Only display co-authorship for certain types of documents
+      # Journal and conference articles, books, not (yet?) software
+      VALUES ?publication_type { wd:Q13442814 wd:Q571 wd:Q26973022 wd:Q17928402 wd:Q947859 wd:Q54670950 }
+      FILTER EXISTS { ?work wdt:P31 ?publication_type . }
+
+      # No self-links.
+      FILTER (?author1 != ?author2)
+
+      # Images
+      OPTIONAL { ?author1 wdt:P18 ?image1 }
+      OPTIONAL { ?author2 wdt:P18 ?image2 }
+
+      # Coloring of the nodes
+      BIND("FFFFFF" AS ?rgb)
+      BIND("coauthored" AS ?edgeLabel)
+    }
+  }
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en,da,de,es,fr,jp,sv,ru,zh". }
 }
