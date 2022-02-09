@@ -1,0 +1,11 @@
+#defaultView:Table
+
+SELECT
+  ?manager ?managerLabel ?lab ?labLabel ?orcid
+WHERE {
+  ?lab wdt:P361* wd:Q107392274 .  # Get all subunits of HITS
+  ?lab wdt:P1037 ?manager .
+  ?manager wdt:P496 ?orcid .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,da,de,es,fr,jp,sv,ru,zh". }
+}
+ORDER BY ASC(?managerLabel)
