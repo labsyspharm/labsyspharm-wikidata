@@ -7,9 +7,9 @@ SELECT
 WHERE {
   {
     SELECT
-      (?lab as ?subject) (?labLabel as ?subjectLabel) ?image2  
+      (?lab as ?subject) (?labLabel as ?subjectLabel) ?image1
       ?rgb ?edgeLabel
-      (?person as ?object) (?personLabel as ?objectLabel) ?image1 
+      (?person as ?object) (?personLabel as ?objectLabel) ?image2
     WHERE {
       ?lab wdt:P361 wd:Q107380113 .
       ?person wdt:P1416 ?lab .
