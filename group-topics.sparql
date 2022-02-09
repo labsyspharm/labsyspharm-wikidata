@@ -1,0 +1,10 @@
+#defaultView:Graph
+
+SELECT
+  ?lab ?labLabel ?topic ?topicLabel
+WHERE {
+  ?lab wdt:P361* wd:Q107392274 .  # Get all subunits of HITS
+  ?lab wdt:P2650 ?topic .
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,da,de,es,fr,jp,sv,ru,zh". }
+}
+ORDER BY ASC(?managerLabel)
