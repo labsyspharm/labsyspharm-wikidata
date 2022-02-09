@@ -2,27 +2,52 @@
 #defaultView:Graph
 
 SELECT
-  ?subject ?subjectLabel ?rgb ?object ?objectLabel
+  ?subject ?subjectLabel ?image1 ?rgb ?edgeLabel
+  ?object ?objectLabel ?image2
 WHERE {
   {
     SELECT
-      (?lab as ?subject) (?labLabel as ?subjectLabel) ?rgb
-      (?manager as ?object) (?managerLabel as ?objectLabel)
+      (?lab as ?subject) (?labLabel as ?subjectLabel) ?image2  
+      ?rgb ?edgeLabel
+      (?person as ?object) (?personLabel as ?objectLabel) ?image1 
+    WHERE {
+      ?lab wdt:P361 wd:Q107380113 .
+      ?person wdt:P1416 ?lab .
+      OPTIONAL { ?lab wdt:P18 ?image1 }
+      OPTIONAL { ?person wdt:P18 ?image2 }
+      BIND("FF00FF" AS ?rgb) .
+      BIND("affiliate" AS ?edgeLabel) .
+    }
+  }  
+  UNION
+  {
+    SELECT
+      (?lab as ?subject) (?labLabel as ?subjectLabel) ?image1
+      ?rgb ?edgeLabel                                       
+      (?manager as ?object) (?managerLabel as ?objectLabel) ?image2
     WHERE {
       ?lab wdt:P361 wd:Q107380113 .
       ?lab wdt:P1037 ?manager .
-      BIND("3080BB" AS ?rgb) .
+      OPTIONAL { ?lab wdt:P18 ?image1 }
+      OPTIONAL { ?manager wdt:P18 ?image2 }
+      BIND("FF00FF" AS ?rgb) .
+      BIND("directed by" AS ?edgeLabel) .
     }
   }
   UNION
   {
     SELECT
-      (?person as ?subject) (?personLabel as ?subjectLabel) ?rgb
-      (?lab as ?object) (?labLabel as ?objectLabel)
+      (?lab1 as ?subject) (?lab1Label as ?subjectLabel) ?image1
+      ?rgb ?edgeLabel
+      (?lab2 as ?object) (?lab2Label as ?objectLabel) ?image2
     WHERE {
-      ?lab wdt:P361 wd:Q107380113 .
-      ?person wdt:P1416 ?lab .
+      ?lab1 wdt:P361 wd:Q107380113 .
+      ?lab2 wdt:P361 wd:Q107380113 .
+      ?lab1 wdt:P361 ?lab2 .
+      OPTIONAL { ?lab1 wdt:P18 ?image1 }
+      OPTIONAL { ?lab2 wdt:P18 ?image2 }
       BIND("FF00FF" AS ?rgb) .
+      BIND("part of" AS ?edgeLabel) .
     }
   }  
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en,da,de,es,fr,jp,sv,ru,zh". }
