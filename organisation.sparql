@@ -1,0 +1,29 @@
+# tool: scholia
+#defaultView:Graph
+
+SELECT
+  ?subject ?subjectLabel ?rgb ?object ?objectLabel
+WHERE {
+  {
+    SELECT
+      (?lab as ?subject) (?labLabel as ?subjectLabel) ?rgb
+      (?manager as ?object) (?managerLabel as ?objectLabel)
+    WHERE {
+      ?lab wdt:P361 wd:Q107380113 .
+      ?lab wdt:P1037 ?manager .
+      BIND("3080BB" AS ?rgb) .
+    }
+  }
+  UNION
+  {
+    SELECT
+      (?person as ?subject) (?personLabel as ?subjectLabel) ?rgb
+      (?lab as ?object) (?labLabel as ?objectLabel)
+    WHERE {
+      ?lab wdt:P361 wd:Q107380113 .
+      ?person wdt:P1416 ?lab .
+      BIND("FF00FF" AS ?rgb) .
+    }
+  }  
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,da,de,es,fr,jp,sv,ru,zh". }
+}
