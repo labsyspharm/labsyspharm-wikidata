@@ -1,10 +1,11 @@
 #defaultView:Table
 
 SELECT
-  ?manager ?managerLabel ?lab ?labLabel ?orcid
+  ?managerLabel ?manager ?orcid ?labLabel ?lab ?website
 WHERE {
-  ?lab wdt:P361* wd:Q107392274 .  # Get all subunits of HITS
+  ?lab wdt:P361 wd:Q107380113 .  # Get all direct subunits of LSP
   ?lab wdt:P1037 ?manager .
+  ?lab wdt:P856 ?website .
   ?manager wdt:P496 ?orcid .
   SERVICE wikibase:label { bd:serviceParam wikibase:language "en,da,de,es,fr,jp,sv,ru,zh". }
 }
