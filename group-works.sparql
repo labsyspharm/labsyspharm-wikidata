@@ -1,0 +1,32 @@
+#defaultView:Graph
+
+# This query results in a graph with pink colored nodes
+# representing laboratories in the LSP and regular nodes
+# representing publications that were co-authored by
+# members of at least two laboratories in the LSP.
+# Edges connect laboratories to publications if one
+# of the authors is affiliated with that lab.
+
+SELECT
+  ?work ?workLabel
+  ?lab1 ?lab1Label
+  ?rgb
+WHERE {
+  wd:Q107380113 ^wdt:P361 ?lab1 , ?lab2 .
+  ?lab1 ^( wdt:P108 | wdt:P1416 | wdt:P463 ) ?author1 .
+  ?lab2 ^( wdt:P108 | wdt:P1416 | wdt:P463 ) ?author2 .
+  ?work wdt:P50 ?author1 , ?author2 .
+
+  # Only display co-authorship for certain types of documents
+  # Journal and conference articles, books, not (yet?) software
+  VALUES ?publication_type { wd:Q13442814 wd:Q571 wd:Q26973022 wd:Q17928402 wd:Q947859 wd:Q54670950 }
+  FILTER EXISTS { ?work wdt:P31 ?publication_type . }
+
+  # No self-links.
+  FILTER (?lab1 != ?lab2)
+  FILTER (?author1 != ?author2)
+
+  BIND("FF00FF" as ?rgb)
+
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,da,de,es,fr,jp,sv,ru,zh". }
+}
