@@ -1,3 +1,7 @@
+#+ summary: A query for PIs in HiTS
+#+ endpoint: https://query.wikidata.org/sparql
+#+ tags:
+#+   - bibliometrics
 #defaultView:Table
 
 SELECT

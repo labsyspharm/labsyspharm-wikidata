@@ -1,3 +1,7 @@
+#+ summary: A query for works that were co-authored by two or more labs in HiTS
+#+ endpoint: https://query.wikidata.org/sparql
+#+ tags:
+#+   - bibliometrics
 #defaultView:Graph
 
 # This query results in a graph with pink colored nodes

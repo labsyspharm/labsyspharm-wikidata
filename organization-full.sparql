@@ -1,3 +1,7 @@
+#+ summary: A hollistic bibliometric query for HiTS
+#+ endpoint: https://query.wikidata.org/sparql
+#+ tags:
+#+   - bibliometrics
 #defaultView:Graph
 
 SELECT

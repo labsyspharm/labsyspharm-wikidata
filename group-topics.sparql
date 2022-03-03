@@ -1,3 +1,7 @@
+#+ summary: A query for topics of interest for parts of HiTS
+#+ endpoint: https://query.wikidata.org/sparql
+#+ tags:
+#+   - bibliometrics
 #defaultView:Graph
 
 SELECT

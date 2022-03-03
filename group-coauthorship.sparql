@@ -1,3 +1,7 @@
+#+ summary: A query for co-authorships between groups in HiTS
+#+ endpoint: https://query.wikidata.org/sparql
+#+ tags:
+#+   - bibliometrics
 #defaultView:Graph
 
 # This query results in a graph whose nodes are laboratories within

@@ -1,5 +1,9 @@
-# tool: scholia
+#+ summary: A query for co-authorships between affiliates of HiTS
+#+ endpoint: https://query.wikidata.org/sparql
+#+ tags:
+#+   - bibliometrics
 #defaultView:Graph
+
 SELECT
   ?author1 ?author1Label ?image1 ?rgb
   ?author2 ?author2Label ?image2 
